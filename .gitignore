@@ -2,3 +2,4 @@ nodemodules
 package.json
 package-lock.json
 .env
+vercel.json
