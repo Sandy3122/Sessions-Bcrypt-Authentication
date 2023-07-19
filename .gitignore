@@ -1,5 +1,12 @@
-nodemodules
+# Ignore node_modules directory
+node_modules/
+
+# Ignore package.json and package-lock.json
 package.json
 package-lock.json
+
+# Ignore .env file
 .env
+
+# Ignore vercel.json file (used for Vercel deployments)
 vercel.json
