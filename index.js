@@ -56,7 +56,7 @@ app.use(sessionMiddleware);
 app.use(routes);
 
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 4000;
 app.listen(port, () =>
     console.log(`Server running at http://localhost:${port}`)
 );

@@ -2,21 +2,38 @@ const express = require("express")
 const router = express.Router()
 const userModel = require("../models/User");
 const bcrypt = require("bcrypt")
+const path = require("path")
 require("dotenv").config();
-
+const fs = require("fs");
 
 const sessionMiddleware = require('../sessions/sessions')
 //Using Session Middleware
 router.use(sessionMiddleware);
+
+router.use(express.static(path.join(__dirname, 'views')));
 
 //Session Checker
 const isAuth = (req, res, next) => {
     req.session.isAuth ? next() : res.redirect('/login')
 } 
 
+// Function to read and send HTML files
+function renderHTML(filename, res) {
+    const filePath = path.join(__dirname, "../views", filename);
+    fs.readFile(filePath, "utf8", (err, data) => {
+        if (err) {
+            console.error("Error reading HTML file:", err);
+            res.status(500).send("<center>Internal Server Error</center>");
+        } else {
+            res.send(data);
+        }
+    });
+}
+
+
 //Landing Page Route
 router.get('/', (req, res) => {
-    req.session.isAuth ? res.redirect("/home") : res.render("landing")
+    req.session.isAuth ? res.redirect("/home") : renderHTML("landing.html", res)
 });
 
 //Login Route
@@ -26,7 +43,7 @@ router.get('/login', (req, res) => {
         return res.redirect('/home')
     }
     else{
-       return res.render('login')
+       return renderHTML('login.html', res)
     }
 });
 
@@ -58,7 +75,7 @@ router.post('/login', async(req, res) => {
 
 //SignUp Route
 router.get('/signup', (req,res) => {
-    req.session.isAuth ? res.redirect("/home") : res.render("signup")
+    req.session.isAuth ? res.redirect("/home") : renderHTML("signup.html", res)
 });
 
 router.get('/signup', async(req, res) =>{
@@ -110,7 +127,7 @@ router.post('/logout', (req,res) => {
 });
 
 router.get('/home', isAuth, (req, res) => {
-    res.render("home");
+    renderHTML("home.html", res);
 });
 
 module.exports = router;
