@@ -10,3 +10,4 @@ package-lock.json
 
 # Ignore vercel.json file (used for Vercel deployments)
 vercel.json
+.gitignore
