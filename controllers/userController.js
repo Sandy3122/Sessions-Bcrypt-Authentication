@@ -10,7 +10,7 @@ const sessionMiddleware = require('../sessions/sessions')
 //Using Session Middleware
 router.use(sessionMiddleware);
 
-router.use(express.static(path.join(__dirname, 'views')));
+router.use(express.static(path.join(__dirname, 'dist')));
 
 //Session Checker
 const isAuth = (req, res, next) => {
@@ -19,7 +19,7 @@ const isAuth = (req, res, next) => {
 
 // Function to read and send HTML files
 function renderHTML(filename, res) {
-    const filePath = path.join(__dirname, "../views", filename);
+    const filePath = path.join(__dirname, "../dist", filename);
     fs.readFile(filePath, "utf8", (err, data) => {
         if (err) {
             console.error("Error reading HTML file:", err);
@@ -33,7 +33,12 @@ function renderHTML(filename, res) {
 
 //Landing Page Route
 router.get('/', (req, res) => {
-    req.session.isAuth ? res.redirect("/home") : renderHTML("landing.html", res)
+    if(req.session.isAuth){
+        res.redirect("/home")
+    }
+    else{
+        renderHTML('main.html',res )
+    }
 });
 
 //Login Route
@@ -43,7 +48,7 @@ router.get('/login', (req, res) => {
         return res.redirect('/home')
     }
     else{
-       return renderHTML('login.html', res)
+       renderHTML('login.html', res)
     }
 });
 
@@ -117,7 +122,7 @@ router.post('/logout', (req,res) => {
         if(!err){
             res.clearCookie('sessionId');
             // res.json({"message": "Logout successfull!" });
-            res.send(`Logout Successfully, <a href="/">Go Back To Landing Page</a>`)
+            res.send(`Logout Successfully, <a href="/">Go Back To Main Page</a>`)
             }
         else{
             console.log(err);

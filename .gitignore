@@ -8,6 +8,4 @@ package-lock.json
 # Ignore .env file
 .env
 
-# Ignore vercel.json file (used for Vercel deployments)
-vercel.json
 .gitignore

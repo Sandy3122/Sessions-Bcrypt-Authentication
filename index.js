@@ -36,7 +36,7 @@ const path = require("path")
 // const bodyParser = require("body-parser")
 
 // Serve static files from the build directory
-app.use(express.static(path.join(__dirname, 'views')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 //To accept the form data
 app.use(express.urlencoded({extended: true}))

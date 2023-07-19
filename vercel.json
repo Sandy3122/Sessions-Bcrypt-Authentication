@@ -1,0 +1,19 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "index.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/index.js"
+      }
+    ],
+    "env": {
+      "SESSION_SECRET": "c7598b96456d0bd945fac9e074eb425b5c4c52dd3a13865a43ce69dd8913b6ff"
+    }
+  }
+  
